@@ -1,3 +1,7 @@
+import pandas
+
+questionCSV = pandas.read_csv("Questions.csv")
+
 #Array to store the names of players (string).
 playerNames = []
 
@@ -15,3 +19,8 @@ for i in range(numOfPlayers):
     name = input("Please enter a name Player {}: ".format(i+1)).strip()
     playerNames.append(name)
     print("Welcome, {}!".format(name))
+
+#Main game
+print("There is a total of 10 trivia questions that must be answered. You will earn points if you get the answer correct. Whoever has the most points at the end wins! ALL NUMERICAL ANSWERS ONLY ACCEPT DIGITS, DO NOT USE WORD FORM!")
+
+
