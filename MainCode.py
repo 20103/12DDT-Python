@@ -5,7 +5,9 @@ with open("./questions.csv", "r", encoding='utf-8') as csvfile:
     for row in reader_variable:
         data = list(reader_variable)
 
-print("DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)+1))
+numOfQuestions = len(data) #usable with arrays
+
+print("DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)))
 
 """Note:
     0 = Trivia topic
@@ -14,9 +16,30 @@ print("DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)
     3 = Information
 """
 
-testList = data[0][0] #First value is to access the list wanted, second value is for accessing the items stored within
+topicIndex = 0
+questionIndex = 1
+answerIndex = 2
+infoIndex = 3
+
+"""testList = data[0][0] #First value is to access the list wanted, second value is for accessing the items stored within
 print(testList)
-print(len(testList))
+print(len(testList))"""
+
+#Test run!
+
+#random.ranint()
+
+def generateQuestion():
+    randomNumber = random.randint(1, numOfQuestions - 1) #Confused me for a while, the questions start at 1 and end at 19 (index).
+    questionList = data[randomNumber]
+    questionArray = []
+    for i in range(len(questionList)):
+        questionArray.append(questionList[i])
+        i += 1
+    print(questionArray)
+
+
+print(generateQuestion())
 
 #Array to store the names of players (string).
 
