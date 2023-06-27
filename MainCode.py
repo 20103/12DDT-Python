@@ -5,29 +5,28 @@ with open("./questions.csv", "r", encoding='utf-8') as csvfile:
     for row in reader_variable:
         data = list(reader_variable)
 
+#CONFIG
+QUESTION_AMOUNT = 10 #How many trivia questions per game
+
+#Store current question.
+questionInfo = None
+
+#Array to store the names of players (string).
+playerNames = []
+playerScores = []
+
 numOfQuestions = len(data) #usable with arrays
 
-print("DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)))
+#print("DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)))
+
+#Test run!
 
 """Note:
     0 = Trivia topic
     1 = Question
     2 = Answer
-    3 = Information
+    3 = Description
 """
-
-topicIndex = 0
-questionIndex = 1
-answerIndex = 2
-infoIndex = 3
-
-"""testList = data[0][0] #First value is to access the list wanted, second value is for accessing the items stored within
-print(testList)
-print(len(testList))"""
-
-#Test run!
-
-#random.ranint()
 
 def generateQuestion():
     randomNumber = random.randint(1, numOfQuestions - 1) #Confused me for a while, the questions start at 1 and end at 19 (index).
@@ -36,15 +35,7 @@ def generateQuestion():
     for i in range(len(questionList)):
         questionArray.append(questionList[i])
         i += 1
-    print(questionArray)
-
-
-print(generateQuestion())
-
-#Array to store the names of players (string).
-
-playerNames = []
-playerScores = []
+    return questionArray
 
 
 #Initial prompt & greeting.
@@ -64,7 +55,21 @@ for i in range(numOfPlayers):
     print("Welcome, {}!".format(name))
 
 #Main game
-print("There is a total of 10 trivia questions that must be answered. You will earn points if you get the answer correct. Whoever has the most points at the end wins! ALL NUMERICAL ANSWERS ONLY ACCEPT DIGITS, DO NOT USE WORD FORM!")
+
+#I use both "f" and "format". Why? I don't know.
+print(f"There is a total of {QUESTION_AMOUNT} trivia questions that must be answered. You will earn points if you get the answer correct. Whoever has the most points at the end wins! ALL NUMERICAL ANSWERS ONLY ACCEPT DIGITS, DO NOT USE WORD FORM!")
+
+for i in range(1, QUESTION_AMOUNT):
+    #Get question & data. Store into appropriate variables.
+    questionInfo = generateQuestion()
+    topic = questionInfo[0]
+    question = questionInfo[1]
+    answer = questionInfo[2]
+    desc = questionInfo[3]
+
+    answerInput = str(input(f"Question {i}: {question} "))
+
+
 
 
 
