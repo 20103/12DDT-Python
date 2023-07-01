@@ -10,6 +10,7 @@ QUESTION_AMOUNT = 10 #How many trivia questions per game
 
 #Store current question.
 questionInfo = None
+usedQuestions = []
 
 #Array to store the names of players (string).
 playerNames = []
@@ -28,14 +29,16 @@ numOfQuestions = len(data) #usable with arrays
     3 = Description
 """
 
+#This function was definitely a highlight for me. I learnt list comprehension and how useful they can be. https://www.w3schools.com/python/python_lists_comprehension.asp
 def generateQuestion():
-    randomNumber = random.randint(1, numOfQuestions - 1) #Confused me for a while, the questions start at 1 and end at 19 (index).
-    questionList = data[randomNumber]
-    questionArray = []
-    for i in range(len(questionList)):
-        questionArray.append(questionList[i])
-        i += 1
-    return questionArray
+    availableQuestions = [q for q in data if q not in usedQuestions]
+    if len(availableQuestions) == 0:
+        print("ERROR: NO MORE QUESTIONS AVAILABLE")
+        exit()
+    randomNumber = random.randint(0, len(availableQuestions) - 1)
+    selectedQuestion = availableQuestions[randomNumber]
+    usedQuestions.append(selectedQuestion)
+    return selectedQuestion
 
 
 #Initial prompt & greeting.
@@ -59,7 +62,7 @@ for i in range(numOfPlayers):
 #I use both "f" and "format". Why? I don't know.
 print(f"There is a total of {QUESTION_AMOUNT} trivia questions that must be answered. You will earn points if you get the answer correct. Whoever has the most points at the end wins! ALL NUMERICAL ANSWERS ONLY ACCEPT DIGITS, DO NOT USE WORD FORM!")
 
-for i in range(1, QUESTION_AMOUNT):
+for i in range(1, QUESTION_AMOUNT + 1):
     #Get question & data. Store into appropriate variables.
     questionInfo = generateQuestion()
     topic = questionInfo[0]
@@ -67,7 +70,16 @@ for i in range(1, QUESTION_AMOUNT):
     answer = questionInfo[2]
     desc = questionInfo[3]
 
-    answerInput = str(input(f"Question {i}: {question} "))
+    answerInput = str(input(f"Question {i}: {question} ")).lower()
+
+    if answerInput == answer:
+        print("Correct!")
+    else:
+        print(f"Incorrect! The answer was: {answer}")
+    print(desc)
+        
+
+    
 
 
 
