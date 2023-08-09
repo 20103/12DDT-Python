@@ -21,7 +21,7 @@ usedQuestions = []
 
 numOfQuestions = len(data) #usable with arrays
 
-print("DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)))
+#print(Fore.LIGHTBLACK_EX + "DEBUGGING: The variable 'data' has {} trivia questions.".format(len(data)))
 
 #Test run!
 
@@ -71,12 +71,12 @@ def runGame():
         questionInfo = generateQuestion() #See generateQuestion() function above for more info
         topic = questionInfo[0]
         question = questionInfo[1]
-        answer = questionInfo[2].lower()
+        answer = questionInfo[2]
         desc = questionInfo[3]
 
         answerInput = str(input(Fore.LIGHTYELLOW_EX + f"Genre: {topic}\n" + f"Question {i}: {question} " + Fore.LIGHTCYAN_EX)).lower()
 
-        if answerInput == answer:
+        if answerInput == answer.lower():
             print(Fore.LIGHTGREEN_EX + "Correct!")
             playerScore += 1
         else:
