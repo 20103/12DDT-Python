@@ -5,6 +5,7 @@ init(autoreset=True) #auto reset won't work for some mysterious reason
 
 #consider adding tkinter gui if i can be bothered
 #also maybe add option for multiple different answers including numerical. can be done through lists, separating them at commas etc.
+#don't have time/can't be bothered lol
 
 with open("./questions.csv", "r", encoding='utf-8') as csvfile:
     reader_variable = csv.reader(csvfile, delimiter=",")
@@ -45,7 +46,13 @@ def generateQuestion():
     usedQuestions.append(selectedQuestion)
     return selectedQuestion
 
+#Debugging, prints all available questions
+"""while True:
+    print(generateQuestion()[1])
+"""
+
 def runGame():
+    #re/set score to 0
     playerScore = 0
 
     #Initial prompt & greeting.
@@ -53,10 +60,12 @@ def runGame():
     input(Fore.LIGHTBLACK_EX + "Press Enter to continue..." + Fore.LIGHTCYAN_EX)
 
     #You can consider adding a "Confirm?" prompt to the user, however this is not essential.
+    #Addendum: I would have used the string split() method to eliminate excess space, however I want the user to have more freedom.
     nameInput = input(Fore.LIGHTYELLOW_EX + "Please enter a username: " + Fore.LIGHTCYAN_EX)
 
+    #Make sure user inputs a name instead of blank space
     while nameInput.isspace() or nameInput == "":
-        nameInput = input(Fore.RED + "You did not enter anything! Please enter a username: " + Fore.LIGHTCYAN_EX)
+        nameInput = input(f"{Fore.RED}You did not enter anything! {Fore.YELLOW}Please enter a username: " + Fore.LIGHTCYAN_EX)
 
     playerName = nameInput.strip()
     print(f"{Fore.WHITE}Welcome, {playerName}!")
@@ -74,7 +83,8 @@ def runGame():
         answer = questionInfo[2]
         desc = questionInfo[3]
 
-        answerInput = str(input(Fore.LIGHTYELLOW_EX + f"Genre: {topic}\n" + f"Question {i}: {question} " + Fore.LIGHTCYAN_EX)).lower()
+        #Thanks, stack overflow!!!
+        answerInput = " ".join(str(input(Fore.LIGHTYELLOW_EX + f"Genre: {topic}\n" + f"Question {i}: {question} " + Fore.LIGHTCYAN_EX)).split()).lower()
 
         if answerInput == answer.lower():
             print(Fore.LIGHTGREEN_EX + "Correct!")
@@ -84,6 +94,7 @@ def runGame():
         print(desc)
         input(Fore.LIGHTBLACK_EX + "Press Enter to continue..." + Fore.LIGHTCYAN_EX)
 
+    #Information for endScreen() function
     return(playerScore, playerName)
             
 def endScreen(playerInfo):
@@ -116,7 +127,7 @@ while True:
     #Ask if user wants to play again
     loopInput = str(input(Fore.YELLOW + "Play again? Empty answer will be considered as no: "))
 
-    if loopInput.strip().lower() in ["true", "yes", "1", "y", "yeah", "sure"]:
+    if loopInput.strip().lower() in ["true", "yes", "1", "y", "yeah", "sure", "ok", "okay"]:
         print(Fore.YELLOW + "Restarting game...")
         input(Fore.LIGHTBLACK_EX + "Press Enter to continue...")
     else:
