@@ -1,11 +1,7 @@
-import csv, random, math
+import csv, random, math, time
 
 from colorama import Fore, init
 init(autoreset=True) #auto reset won't work for some mysterious reason
-
-#consider adding tkinter gui if i can be bothered
-#also maybe add option for multiple different answers including numerical. can be done through lists, separating them at commas etc.
-#don't have time/can't be bothered lol
 
 with open("./questions.csv", "r", encoding='utf-8') as csvfile:
     reader_variable = csv.reader(csvfile, delimiter=",")
@@ -84,8 +80,10 @@ def runGame():
         desc = questionInfo[3]
 
         #Thanks, stack overflow!!!
-        answerInput = " ".join(str(input(Fore.LIGHTYELLOW_EX + f"Genre: {topic}\n" + f"Question {i}: {question} " + Fore.LIGHTCYAN_EX)).split()).lower()
-
+        print()
+        print(Fore.LIGHTYELLOW_EX + f"Genre: {topic}\n" + f"Question {i}: {question} ")
+        answerInput = " ".join(str(input(Fore.LIGHTCYAN_EX + "Your Answer: ")).split()).lower()
+        print()
         if answerInput == answer.lower():
             print(Fore.LIGHTGREEN_EX + "Correct!")
             playerScore += 1
@@ -106,9 +104,10 @@ def endScreen(playerInfo):
     percentageScore = math.floor(playerScore / QUESTION_AMOUNT * 100)
 
     #get percentage by dividing playerscore with QUESTION_AMOUNT
-
+    print()
     print(f"{Fore.YELLOW}Well done, {playerName}! You have answered all the questions.\nYour total score is: {playerScore} out of {QUESTION_AMOUNT}. This means you got {percentageScore}% of the questions correct!")
     input(Fore.LIGHTBLACK_EX + "Press Enter to continue..." + Fore.LIGHTCYAN_EX)
+    print()
     if percentageScore == 100:
         print(Fore.GREEN + "Wow, that is impressive! You answered every question correctly.")
     elif percentageScore >= 80:
@@ -125,11 +124,18 @@ while True:
     #Functions to run the game code
     endScreen(runGame())
     #Ask if user wants to play again
-    loopInput = str(input(Fore.YELLOW + "Play again? Empty answer will be considered as no: "))
+    print()
+    loopInput = str(input(Fore.YELLOW + "Play again? Empty answer will be considered as no: " + Fore.LIGHTCYAN_EX))
 
     if loopInput.strip().lower() in ["true", "yes", "1", "y", "yeah", "sure", "ok", "okay"]:
         print(Fore.YELLOW + "Restarting game...")
+        for i in range(3):
+            time.sleep(0.7) #imported time library, added delay for aesthetics
+            print(Fore.LIGHTBLACK_EX + ".")
+        print(Fore.YELLOW + "Done!")
         input(Fore.LIGHTBLACK_EX + "Press Enter to continue...")
+        print()
+        print()
     else:
         break
 
